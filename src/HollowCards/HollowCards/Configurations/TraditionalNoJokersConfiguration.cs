@@ -7,7 +7,7 @@ namespace HollowCards.Configurations
     public class TraditionalNoJokersConfiguration : ICardsConfiguration
     {
         public int NumberOfCardsInDeck { get => 1; }
-        public string ConfigurationType { get => "TraditionalNoJokers"; }
+        public string ConfigurationType { get => CardConfiguration.TraditionalNoJokers; }
 
         public IDictionary<string, string> FaceValueMapping { get; private set; }
 
