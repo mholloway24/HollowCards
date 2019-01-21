@@ -5,12 +5,19 @@ using System.Security.Cryptography;
 
 namespace HollowCards
 {
+    /// <summary>
+    /// Containes a collection of <see cref="Card"/> objects defined by a <seealso cref="ICardsConfiguration"/> object
+    /// </summary>
     public class Deck
     {
         private IList<Card> _cards { get; set; }
         private int _currentIndex { get; set; } = 0;
         private RNGCryptoServiceProvider _randomProvider { get; }
 
+        /// <summary>
+        /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
+        /// </summary>
+        /// <param name="configuration"></param>
         public Deck(ICardsConfiguration configuration)
         {
             if(configuration == null)
@@ -22,8 +29,15 @@ namespace HollowCards
             _cards = configuration.ConfigureDeck();
         }
 
+        /// <summary>
+        /// Are there cards left in the deck?
+        /// </summary>
         public bool HasCards => _currentIndex < _cards.Count();
 
+        /// <summary>
+        /// Retrieve the top card on the deck
+        /// </summary>
+        /// <returns></returns>
         public Card Deal()
         {
             if (_currentIndex >= _cards.Count())
@@ -34,17 +48,23 @@ namespace HollowCards
             return _cards[_currentIndex++];
         }
 
+        /// <summary>
+        /// Shuffle the deck and reset the card count
+        /// </summary>
         public void Shuffle()
         {
             _currentIndex = 0;
 
             for(int i = 0; i < _cards.Count; i++)
             {
-                byte swap = RollDice((byte)(_cards.Count - 1));
+                byte swap = PickCard((byte)(_cards.Count - 1));
                 SwapCards(i, swap);
             }
         }
 
+        /// <summary>
+        /// Start a new game by shuffling the deck
+        /// </summary>
         public void NewGame()
         {
             Shuffle();
@@ -57,10 +77,10 @@ namespace HollowCards
             _cards[second] = temp;
         }
 
-        private byte RollDice(byte numberSides)
+        private byte PickCard(byte numberCards)
         {
-            if (numberSides <= 0)
-                throw new ArgumentOutOfRangeException(nameof(numberSides));
+            if (numberCards <= 0)
+                throw new ArgumentOutOfRangeException(nameof(numberCards));
 
             // Create a byte array to hold the random value.
             byte[] randomNumber = new byte[1];
@@ -69,26 +89,25 @@ namespace HollowCards
                 // Fill the array with a random value.
                 _randomProvider.GetBytes(randomNumber);
             }
-            while (!IsFairRoll(randomNumber[0], numberSides));
+            while (!IsFairChoice(randomNumber[0], numberCards));
             // Return the random number mod the number
-            // of sides.  The possible values are zero-
+            // of cards.  The possible values are zero-
             // based, so we add one.
-            return (byte)((randomNumber[0] % numberSides) + 1);
+            return (byte)((randomNumber[0] % numberCards) + 1);
         }
 
-        private static bool IsFairRoll(byte roll, byte numSides)
+        private static bool IsFairChoice(byte choice, byte numCards)
         {
-            // There are MaxValue / numSides full sets of numbers that can come up
-            // in a single byte.  For instance, if we have a 6 sided die, there are
-            // 42 full sets of 1-6 that come up.  The 43rd set is incomplete.
-            int fullSetsOfValues = Byte.MaxValue / numSides;
+            // There are MaxValue / numCards full sets of numbers that can come up
+            // in a single byte.
+            int fullSetsOfValues = Byte.MaxValue / numCards;
 
-            // If the roll is within this range of fair values, then we let it continue.
+            // If the choice is within this range of fair values, then we let it continue.
             // In the 6 sided die case, a roll between 0 and 251 is allowed.  (We use
             // < rather than <= since the = portion allows through an extra 0 value).
             // 252 through 255 would provide an extra 0, 1, 2, 3 so they are not fair
             // to use.
-            return roll < numSides * fullSetsOfValues;
+            return choice < numCards * fullSetsOfValues;
         }
     }
 }

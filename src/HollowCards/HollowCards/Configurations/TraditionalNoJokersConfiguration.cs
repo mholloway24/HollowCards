@@ -6,9 +6,9 @@ namespace HollowCards.Configurations
 {
     public class TraditionalNoJokersConfiguration : ICardsConfiguration
     {
-        public int NumberOfCardsInDeck { get => 1; }
+        public int NumberOfCardsInDeck { get => 52; }
         public string ConfigurationType { get => CardConfiguration.TraditionalNoJokers; }
-
+        
         public IDictionary<string, string> FaceValueMapping { get; private set; }
 
         private readonly List<string> Suits = new List<string>() { "Clubs", "Spades", "Hearts", "Diamonds" };
@@ -18,6 +18,10 @@ namespace HollowCards.Configurations
         private readonly string SuitProperty = "Suit";
         private readonly string FaceProperty = "Face";
 
+        /// <summary>
+        /// Configures the <see cref="Deck"/> object's cards according to this <see cref="ICardsConfiguration"/>
+        /// </summary>
+        /// <returns></returns>
         public IList<Card> ConfigureDeck()
         {
             return InitSuits();
@@ -52,16 +56,25 @@ namespace HollowCards.Configurations
             });
         }
 
+        /// <summary>
+        /// Gets the <see cref="ICardsConfiguration"/> value for the string parameter
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public object GetCardValue(string val)
         {
             return FaceValueMapping[val];
         }
 
+        /// <summary>
+        /// Gets the <see cref="ICardsConfiguration"/> display value for the <see cref="Card"/>
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
         public string GetDisplayValue(Card card)
         {
             return string.Format(DisplayFormat, card.ExtendedProperties[FaceProperty], card.ExtendedProperties[SuitProperty]);
         }
-
 
         private IList<Card> InitSuits()
         {
