@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HollowCards.Configurations;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HollowCards.Configurations
+namespace HollowCards.Utility
 {
     /// <summary>
     /// Centralizes the <see cref="ICardsConfiguration"/> registration

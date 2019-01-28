@@ -1,5 +1,5 @@
 ﻿using HollowCards.Configurations;
-using System;
+using HollowCards.Utility;
 
 namespace HollowCards.Console
 {
