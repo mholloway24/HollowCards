@@ -7,10 +7,8 @@ namespace HollowCards.Console
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck(CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalNoJokers));
-
-            deck.NewGame();
-
+            Deck deck = new Deck(CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalAceHigh));
+            
             while(deck.HasCards)
             {
                 Card card = deck.Deal();
