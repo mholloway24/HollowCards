@@ -10,5 +10,9 @@
         /// </summary>
         public static string TraditionalNoJokers = "TraditionalNoJokers";
 
+        /// <summary>
+        /// Traditional Ace High Card Configuration
+        /// </summary>
+        public static string TraditionalAceHigh = "TraditionalAceHigh";
     }
 }

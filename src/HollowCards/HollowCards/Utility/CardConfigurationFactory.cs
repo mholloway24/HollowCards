@@ -18,7 +18,8 @@ namespace HollowCards.Utility
         {
             Configurations = new Dictionary<string, ICardsConfiguration>
             {
-                { CardConfiguration.TraditionalNoJokers, new TraditionalNoJokersConfiguration() }
+                { CardConfiguration.TraditionalNoJokers, new TraditionalNoJokersConfiguration() },
+                { CardConfiguration.TraditionalAceHigh, new TraditionalAceHighConfiguration() }
             };
         }
 

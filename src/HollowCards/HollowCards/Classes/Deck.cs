@@ -18,7 +18,7 @@ namespace HollowCards
         /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
         /// </summary>
         /// <param name="configuration"></param>
-        public Deck(ICardsConfiguration configuration)
+        private Deck(ICardsConfiguration configuration)
         {
             if(configuration == null)
             {
@@ -27,6 +27,14 @@ namespace HollowCards
 
             _randomProvider = new RNGCryptoServiceProvider();
             _cards = configuration.ConfigureDeck();
+        }
+
+        public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
+        {
+            if(startNewGame)
+            {
+                NewGame();
+            }
         }
 
         /// <summary>
