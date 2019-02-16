@@ -11,8 +11,9 @@ namespace HollowCards
     public class Deck
     {
         private IList<Card> _cards { get; set; }
-        private int _currentIndex { get; set; } = 0;
         private RNGCryptoServiceProvider _randomProvider { get; }
+
+        public int CurrentIndex { get; private set; } = 0;
 
         /// <summary>
         /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
@@ -40,7 +41,7 @@ namespace HollowCards
         /// <summary>
         /// Are there cards left in the deck?
         /// </summary>
-        public bool HasCards => _currentIndex < _cards.Count();
+        public bool HasCards => CurrentIndex < _cards.Count();
 
         /// <summary>
         /// Retrieve the top card on the deck
@@ -48,12 +49,12 @@ namespace HollowCards
         /// <returns></returns>
         public Card Deal()
         {
-            if (_currentIndex >= _cards.Count())
+            if (CurrentIndex >= _cards.Count())
             {
                 Shuffle();                
             }
 
-            return _cards[_currentIndex++];
+            return _cards[CurrentIndex++];
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace HollowCards
         /// </summary>
         public void Shuffle()
         {
-            _currentIndex = 0;
+            CurrentIndex = 0;
 
             for(int i = 0; i < _cards.Count; i++)
             {

@@ -12,14 +12,14 @@ namespace HollowCards.Utility
         /// <summary>
         /// List of registered card configurations
         /// </summary>
-        public static IDictionary<string, ICardsConfiguration> Configurations { get; internal set; }
+        public static IDictionary<string, Type> Configurations { get; internal set; }
         
         static CardConfigurationFactory()
         {
-            Configurations = new Dictionary<string, ICardsConfiguration>
+            Configurations = new Dictionary<string, Type>
             {
-                { CardConfiguration.TraditionalNoJokers, new TraditionalNoJokersConfiguration() },
-                { CardConfiguration.TraditionalAceHigh, new TraditionalAceHighConfiguration() }
+                { CardConfiguration.TraditionalNoJokers, typeof(TraditionalNoJokersConfiguration) },
+                { CardConfiguration.TraditionalAceHigh, typeof(TraditionalAceHighConfiguration) }
             };
         }
 
@@ -35,7 +35,7 @@ namespace HollowCards.Utility
                 throw new ArgumentException($"Card Configuration '{name}' already exists");
             }
 
-            Configurations.Add(name, configuration);
+            Configurations.Add(name, configuration.GetType());
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace HollowCards.Utility
             {
                 throw new ArgumentException($"Card Configuration '{name}' cannot be found");
             }
-            return Configurations[name];
+            return (ICardsConfiguration)Activator.CreateInstance(Configurations[name]);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace HollowCards.Console
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck(CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalAceHigh));
+            SuperDeck deck = new SuperDeck(CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalAceHigh), 4);
             
             while(deck.HasCards)
             {
@@ -15,6 +15,7 @@ namespace HollowCards.Console
                 System.Console.WriteLine(card.DisplayValue);
             }
 
+            System.Console.WriteLine(deck.DeckCount);
             System.Console.ReadLine();
         }
     }
