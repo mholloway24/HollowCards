@@ -45,6 +45,7 @@
     <Compile Include="Classes\Card.cs" />
     <Compile Include="Classes\SuperDeck.cs" />
     <Compile Include="Configurations\CardConfiguration.cs" />
+    <Compile Include="Configurations\TraditionalJokersConfiguration.cs" />
     <Compile Include="Configurations\TraditionalAceHighConfiguration.cs" />
     <Compile Include="Utility\CardConfigurationFactory.cs" />
     <Compile Include="Configurations\TraditionalNoJokersConfiguration.cs" />
