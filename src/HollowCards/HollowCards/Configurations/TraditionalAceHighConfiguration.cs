@@ -1,7 +1,5 @@
 ﻿using HollowCards.Utility;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace HollowCards.Configurations
 {
@@ -29,25 +27,26 @@ namespace HollowCards.Configurations
             FaceValueMapping = new Dictionary<string, string>();
             Constants.SuitValues.ForEach(val =>
             {
-                int v;
-
-                if (int.TryParse(val, out v))
+                if (!FaceValueMapping.ContainsKey(val))
                 {
-                    FaceValueMapping.Add(val, val);
-                }
-                else
-                {
-                    switch (val)
+                    if (int.TryParse(val, out int v))
                     {
-                        case "A":
-                            FaceValueMapping.Add(val, "11");
-                            break;
+                        FaceValueMapping.Add(val, val);
+                    }
+                    else
+                    {
+                        switch (val)
+                        {
+                            case Constants.Ace:
+                                FaceValueMapping.Add(val, "11");
+                                break;
 
-                        case "K":
-                        case "Q":
-                        case "J":
-                            FaceValueMapping.Add(val, "10");
-                            break;
+                            case Constants.King:
+                            case Constants.Queen:
+                            case Constants.Jack:
+                                FaceValueMapping.Add(val, "10");
+                                break;
+                        }
                     }
                 }
             });

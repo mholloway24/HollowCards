@@ -14,5 +14,10 @@
         /// Traditional Ace High Card Configuration
         /// </summary>
         public static string TraditionalAceHigh = "TraditionalAceHigh";
+
+        /// <summary>
+        /// Traditional Card Configuration with two Jokers (Big, Little)
+        /// </summary>
+        public static string TraditionalJokers = "TraditionalJokers";
     }
 }

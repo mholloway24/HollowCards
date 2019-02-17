@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace HollowCards.Configurations
 {
-    public class TraditionalNoJokersConfiguration : ICardsConfiguration
+    public class TraditionalJokersConfiguration : ICardsConfiguration
     {
-        public int NumberOfCardsInDeck { get => 52; }
-        public string ConfigurationType { get => CardConfiguration.TraditionalNoJokers; }
-        
+        public int NumberOfCardsInDeck { get => 54; }
+        public string ConfigurationType { get => CardConfiguration.TraditionalJokers; }
+
         public IDictionary<string, string> FaceValueMapping { get; private set; }
 
-        private readonly string DisplayFormat = "{0} of {1}";
+        private readonly string DefaultFormat = "{0} of {1}";
+        private readonly string JokerFormat = "{0} Joker";
+
 
         /// <summary>
         /// Configures the <see cref="Deck"/> object's cards according to this <see cref="ICardsConfiguration"/>
@@ -24,7 +26,7 @@ namespace HollowCards.Configurations
         private void InitMapping()
         {
             FaceValueMapping = new Dictionary<string, string>();
-            Constants.SuitValues.ForEach(val =>
+            Constants.SuitValuesWithJoker.ForEach(val =>
             {
                 if (!FaceValueMapping.ContainsKey(val))
                 {
@@ -37,13 +39,21 @@ namespace HollowCards.Configurations
                         switch (val)
                         {
                             case Constants.Ace:
-                                FaceValueMapping.Add(val, "1");
+                                FaceValueMapping.Add(val, "11");
                                 break;
 
                             case Constants.King:
                             case Constants.Queen:
                             case Constants.Jack:
                                 FaceValueMapping.Add(val, "10");
+                                break;
+
+                            case Constants.LittleJoker:
+                                FaceValueMapping.Add(val, "20");
+                                break;
+
+                            case Constants.BigJoker:
+                                FaceValueMapping.Add(val, "21");
                                 break;
                         }
                     }
@@ -68,7 +78,17 @@ namespace HollowCards.Configurations
         /// <returns></returns>
         public string GetDisplayValue(Card card)
         {
-            return string.Format(DisplayFormat, card.ExtendedProperties[Constants.FaceProperty], card.ExtendedProperties[Constants.SuitProperty]);
+            switch (card.ExtendedProperties[Constants.FaceProperty])
+            {
+                case Constants.LittleJoker:
+                    return string.Format(JokerFormat, "Little");
+
+                case Constants.BigJoker:
+                    return string.Format(JokerFormat, "Big");
+
+                default:
+                    return string.Format(DefaultFormat, card.ExtendedProperties[Constants.FaceProperty], card.ExtendedProperties[Constants.SuitProperty]);
+            }
         }
 
         private IList<Card> InitSuits()
@@ -89,6 +109,16 @@ namespace HollowCards.Configurations
 
                     cards.Add(new Card(this, kvp.Key, props));
                 }
+            }
+
+            foreach (string jokerVal in Constants.JokerValues)
+            {
+                IDictionary<string, object> props = new Dictionary<string, object>
+                {
+                    { Constants.FaceProperty, jokerVal }
+                };
+
+                cards.Add(new Card(this, jokerVal, props));
             }
 
             return cards;

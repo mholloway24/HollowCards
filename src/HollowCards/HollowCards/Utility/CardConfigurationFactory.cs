@@ -19,7 +19,8 @@ namespace HollowCards.Utility
             Configurations = new Dictionary<string, Type>
             {
                 { CardConfiguration.TraditionalNoJokers, typeof(TraditionalNoJokersConfiguration) },
-                { CardConfiguration.TraditionalAceHigh, typeof(TraditionalAceHighConfiguration) }
+                { CardConfiguration.TraditionalAceHigh, typeof(TraditionalAceHighConfiguration) },
+                { CardConfiguration.TraditionalJokers, typeof(TraditionalJokersConfiguration) }
             };
         }
 

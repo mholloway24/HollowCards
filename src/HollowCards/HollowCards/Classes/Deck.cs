@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HollowCards.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -14,6 +15,7 @@ namespace HollowCards
         private RNGCryptoServiceProvider _randomProvider { get; }
 
         public int CurrentIndex { get; private set; } = 0;
+        public int CardsInDeck { get; }
 
         /// <summary>
         /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
@@ -28,6 +30,7 @@ namespace HollowCards
 
             _randomProvider = new RNGCryptoServiceProvider();
             _cards = configuration.ConfigureDeck();
+            CardsInDeck = configuration.NumberOfCardsInDeck;
         }
 
         public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
@@ -36,6 +39,12 @@ namespace HollowCards
             {
                 NewGame();
             }
+        }
+
+        public Deck(string configurationName, bool startNewGame = true) : 
+            this(CardConfigurationFactory.GetConfiguration(configurationName), startNewGame)
+        {
+
         }
 
         /// <summary>
