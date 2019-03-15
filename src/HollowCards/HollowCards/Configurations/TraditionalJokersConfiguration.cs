@@ -99,15 +99,15 @@ namespace HollowCards.Configurations
             foreach (string suit in Constants.Suits)
             {
 
-                foreach (KeyValuePair<string, string> kvp in FaceValueMapping)
+                foreach (string suitValue in Constants.SuitValues)
                 {
                     IDictionary<string, object> props = new Dictionary<string, object>
                     {
                         { Constants.SuitProperty, suit },
-                        { Constants.FaceProperty, kvp.Key }
+                        { Constants.FaceProperty, suitValue }
                     };
 
-                    cards.Add(new Card(this, kvp.Key, props));
+                    cards.Add(new Card(this, suitValue, props));
                 }
             }
 
@@ -119,6 +119,11 @@ namespace HollowCards.Configurations
                 };
 
                 cards.Add(new Card(this, jokerVal, props));
+            }
+
+            if(cards.Count != this.NumberOfCardsInDeck)
+            {
+                throw new System.Exception("Invalid configuration: card count does not match the expected number of cards in this configuration");
             }
 
             return cards;
