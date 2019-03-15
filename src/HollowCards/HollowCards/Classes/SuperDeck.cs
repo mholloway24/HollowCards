@@ -32,7 +32,7 @@ namespace HollowCards
         {
             _decks = new List<Deck>();
             Parallel.ForEach(Enumerable.Range(0, numberOfDecks), new ParallelOptions { MaxDegreeOfParallelism = 4 }, index =>
-            {
+            { 
                 ICardsConfiguration config = (ICardsConfiguration)Activator.CreateInstance(configuration.GetType());
                 Deck d = new Deck(config);
                 _decks.Add(d);

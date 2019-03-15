@@ -8,16 +8,16 @@
         /// <summary>
         ///  Traditional Card Configuration with No Jokers
         /// </summary>
-        public static string TraditionalNoJokers = "TraditionalNoJokers";
+        public const string TraditionalNoJokers = "TraditionalNoJokers";
 
         /// <summary>
         /// Traditional Ace High Card Configuration
         /// </summary>
-        public static string TraditionalAceHigh = "TraditionalAceHigh";
+        public const string TraditionalAceHigh = "TraditionalAceHigh";
 
         /// <summary>
         /// Traditional Card Configuration with two Jokers (Big, Little)
         /// </summary>
-        public static string TraditionalJokers = "TraditionalJokers";
+        public const string TraditionalJokers = "TraditionalJokers";
     }
 }

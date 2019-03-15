@@ -30,7 +30,7 @@ namespace HollowCards
 
             _randomProvider = new RNGCryptoServiceProvider();
             _cards = configuration.ConfigureDeck();
-            CardsInDeck = configuration.NumberOfCardsInDeck;
+            CardsInDeck = _cards.Count;
         }
 
         public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
