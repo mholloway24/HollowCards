@@ -9,7 +9,7 @@ namespace HollowCards
     /// <summary>
     /// Containes a collection of <see cref="Card"/> objects defined by a <seealso cref="ICardsConfiguration"/> object
     /// </summary>
-    public class Deck
+    public class Deck : IDeck
     {
         private IList<Card> _cards { get; set; }
         private RNGCryptoServiceProvider _randomProvider { get; }
@@ -23,7 +23,7 @@ namespace HollowCards
         /// <param name="configuration"></param>
         private Deck(ICardsConfiguration configuration)
         {
-            if(configuration == null)
+            if (configuration == null)
             {
                 throw new ArgumentNullException(nameof(configuration), "The configuration must be supplied to the deck");
             }
@@ -35,13 +35,13 @@ namespace HollowCards
 
         public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
         {
-            if(startNewGame)
+            if (startNewGame)
             {
                 NewGame();
             }
         }
 
-        public Deck(string configurationName, bool startNewGame = true) : 
+        public Deck(string configurationName, bool startNewGame = true) :
             this(CardConfigurationFactory.GetConfiguration(configurationName), startNewGame)
         {
 
@@ -60,7 +60,7 @@ namespace HollowCards
         {
             if (CurrentIndex >= _cards.Count())
             {
-                Shuffle();                
+                Shuffle();
             }
 
             return _cards[CurrentIndex++];
@@ -73,7 +73,7 @@ namespace HollowCards
         {
             CurrentIndex = 0;
 
-            for(int i = 0; i < _cards.Count; i++)
+            for (int i = 0; i < _cards.Count; i++)
             {
                 byte swap = PickCard((byte)(_cards.Count - 1));
                 SwapCards(i, swap);
