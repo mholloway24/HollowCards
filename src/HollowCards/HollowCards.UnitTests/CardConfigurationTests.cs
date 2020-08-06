@@ -9,7 +9,7 @@ namespace HollowCards.UnitTests
 {
     public class CardConfigurationTests
     {
-        private ICardsConfiguration configuration;
+        private ICardsConfiguration<string> configuration;
 
         [Theory]
         [InlineData(CardConfiguration.TraditionalAceHigh, "TraditionalAceHigh", 52)]
@@ -17,9 +17,9 @@ namespace HollowCards.UnitTests
         [InlineData(CardConfiguration.TraditionalNoJokers, "TraditionalNoJokers", 52)]
         public void EnsureDeckCardCount(string configurationName, string expectedConfigurationName, int expectedCardCount)
         {
-            configuration = CardConfigurationFactory.GetConfiguration(configurationName);
+            configuration = CardConfigurationFactory.GetConfiguration<string>(configurationName);
 
-            Deck deck = new Deck(configuration);
+            var deck = new Deck<string>(configuration);
             Assert.Equal(expectedConfigurationName, configuration.ConfigurationType);
             Assert.Equal(expectedCardCount, deck.CardsInDeck);
             Assert.True(deck.HasCards);
@@ -31,9 +31,9 @@ namespace HollowCards.UnitTests
         [InlineData("TraditionalNoJokers", 4, 208)]
         public void EnsureSuperDeckCardCount(string configurationName, int deckCount, int expectedCardCount)
         {
-            configuration = CardConfigurationFactory.GetConfiguration(configurationName);
+            configuration = CardConfigurationFactory.GetConfiguration<string>(configurationName);
 
-            SuperDeck deck = new SuperDeck(configuration, deckCount);
+            var deck = new SuperDeck<string>(configuration, deckCount);
             Assert.Equal(expectedCardCount, deck.CardCount);
         }
 
@@ -43,10 +43,10 @@ namespace HollowCards.UnitTests
         [InlineData("TraditionalNoJokers", new string[] { }, true)]
         public void TestCardSuits(string configurationName, string[] noSuitValues, bool expectedHasExtendedProperties)
         {
-            configuration = CardConfigurationFactory.GetConfiguration(configurationName);
+            configuration = CardConfigurationFactory.GetConfiguration<string>(configurationName);
             IList<string> noSuitValuesList = noSuitValues.ToList();
-            Deck deck = new Deck(configuration);
-            Card card = null;
+            var deck = new Deck<string>(configuration);
+            Card<string> card = null;
 
             while (deck.HasCards)
             {

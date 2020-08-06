@@ -11,17 +11,19 @@ namespace HollowCards.Console
             Stopwatch sw = new Stopwatch();
 
             sw.Start();
-            SuperDeck deck = new SuperDeck(CardConfiguration.TraditionalJokers, 10000);
-            
+            var deck = new SuperDeck<string>(CardConfiguration.TraditionalJokers, 100);
+            var cardCount = 0;
             while(deck.HasCards)
             {
-                Card card = deck.Deal();
+                var card = deck.Deal();
+                cardCount++;
                 System.Console.WriteLine(card.DisplayValue);
             }
             sw.Stop();
 
             System.Console.WriteLine($"{deck.DeckCount} decks");
             System.Console.WriteLine($"{deck.CardCount} cards");
+            System.Console.WriteLine($"{cardCount} cards dealt");
             System.Console.WriteLine($"{sw.Elapsed} elapsed");
             System.Console.ReadLine();
         }

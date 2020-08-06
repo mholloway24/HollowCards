@@ -62,5 +62,14 @@ namespace HollowCards.Utility
             }
             return (ICardsConfiguration)Activator.CreateInstance(Configurations[name]);
         }
+
+        public static ICardsConfiguration<T> GetConfiguration<T>(string name)
+        {
+            if(!HasConfiguration(name))
+            {
+                throw new ArgumentException($"Card Configuration '{name}' cannot be found");
+            }
+            return (ICardsConfiguration<T>)Activator.CreateInstance(Configurations[name]);
+        }
     }
 }

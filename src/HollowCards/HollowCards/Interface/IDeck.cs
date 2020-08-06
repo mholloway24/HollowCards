@@ -1,10 +1,11 @@
 namespace HollowCards
 {
-    public interface IDeck
+    public interface IDeck<T>
     {
         bool HasCards { get; }
-        Card Deal();
+        Card<T> Deal();
         void Shuffle();
         void NewGame();
+        ICardsConfiguration<T> Config { get; }
     }
 }

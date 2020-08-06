@@ -9,31 +9,28 @@ namespace HollowCards
     /// <summary>
     /// Containes a collection of <see cref="Card"/> objects defined by a <seealso cref="ICardsConfiguration"/> object
     /// </summary>
-    public class Deck : IDeck
+    public class Deck<T> : IDeck<T>
     {
-        private IList<Card> _cards { get; set; }
+        private IList<Card<T>> _cards { get; set; }
         private RNGCryptoServiceProvider _randomProvider { get; }
 
         public int CurrentIndex { get; private set; } = 0;
         public int CardsInDeck { get; }
+        public ICardsConfiguration<T> Config { get; private set; }
 
         /// <summary>
         /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
         /// </summary>
         /// <param name="configuration"></param>
-        private Deck(ICardsConfiguration configuration)
+        private Deck(ICardsConfiguration<T> configuration)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration), "The configuration must be supplied to the deck");
-            }
-
+            Config = configuration ?? throw new ArgumentNullException(nameof(configuration), "The configuration must be supplied to the deck");
             _randomProvider = new RNGCryptoServiceProvider();
-            _cards = configuration.ConfigureDeck();
+            _cards = Config.ConfigureDeck();
             CardsInDeck = _cards.Count;
         }
 
-        public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
+        public Deck(ICardsConfiguration<T> configuration, bool startNewGame = true) : this(configuration)
         {
             if (startNewGame)
             {
@@ -42,7 +39,7 @@ namespace HollowCards
         }
 
         public Deck(string configurationName, bool startNewGame = true) :
-            this(CardConfigurationFactory.GetConfiguration(configurationName), startNewGame)
+            this(CardConfigurationFactory.GetConfiguration<T>(configurationName), startNewGame)
         {
 
         }
@@ -56,7 +53,7 @@ namespace HollowCards
         /// Retrieve the top card on the deck
         /// </summary>
         /// <returns></returns>
-        public Card Deal()
+        public Card<T> Deal()
         {
             if (CurrentIndex >= _cards.Count())
             {
@@ -90,7 +87,7 @@ namespace HollowCards
 
         private void SwapCards(int first, int second)
         {
-            Card temp = _cards[first];
+            var temp = _cards[first];
             _cards[first] = _cards[second];
             _cards[second] = temp;
         }

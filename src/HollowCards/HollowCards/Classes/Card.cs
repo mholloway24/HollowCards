@@ -5,11 +5,11 @@ namespace HollowCards
     /// <summary>
     /// One of a collection contained in a <see cref="Deck"/> and is initialized through <seealso cref="ICardsConfiguration"/>
     /// </summary>
-    public class Card
+    public class Card<T>
     {
-        private ICardsConfiguration _configuration { get; set; }
+        private ICardsConfiguration<T> _configuration { get; set; }
         private string _stringValue { get; set; }
-        public object Value { get => _configuration.GetCardValue(_stringValue); }
+        public T Value { get => _configuration.GetCardValue(_stringValue); }
         public string DisplayValue { get => _configuration.GetDisplayValue(this); }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace HollowCards
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="val"></param>
-        public Card(ICardsConfiguration configuration, string val)
+        public Card(ICardsConfiguration<T> configuration, string val)
         {
             _configuration = configuration;
             _stringValue = val;
@@ -34,7 +34,7 @@ namespace HollowCards
         /// <param name="configuration"></param>
         /// <param name="val"></param>
         /// <param name="extendedProps"></param>
-        public Card(ICardsConfiguration configuration, string val, IDictionary<string, object> extendedProps)
+        public Card(ICardsConfiguration<T> configuration, string val, IDictionary<string, object> extendedProps)
             : this(configuration, val)
         {
             ExtendedProperties = extendedProps;

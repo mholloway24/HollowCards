@@ -7,14 +7,14 @@ namespace HollowCards.UnitTests
 {
     public class CardConfigurationErrorTests
     {
-        private ICardsConfiguration configuration;
+        private ICardsConfiguration<string> configuration;
 
         [Fact]
         public void TestNullDeckConfiguration()
         {
             try
             {
-                Deck deck = new Deck(configuration);
+                var deck = new Deck<string>(configuration);
             }
             catch(Exception ex)
             {
