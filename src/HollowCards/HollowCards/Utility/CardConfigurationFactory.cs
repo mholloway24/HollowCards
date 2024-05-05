@@ -31,7 +31,7 @@ namespace HollowCards.Utility
         /// <param name="configuration"></param>
         public static void RegisterConfiguration(string name, ICardsConfiguration configuration)
         {
-            if (Configurations.ContainsKey(name))
+            if (HasConfiguration(name))
             {
                 throw new ArgumentException($"Card Configuration '{name}' already exists");
             }

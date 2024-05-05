@@ -72,7 +72,8 @@ namespace HollowCards
 
         public void Shuffle()
         {
-            Parallel.ForEach(_decks, _deck =>
+            Parallel.ForEach(_decks, new ParallelOptions { MaxDegreeOfParallelism = 4 }, 
+            _deck =>
             {
                 _deck.Shuffle();
             });
