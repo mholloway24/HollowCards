@@ -36,6 +36,11 @@ namespace HollowCards.Utility
                 throw new ArgumentException($"Card Configuration '{name}' already exists");
             }
 
+            if(configuration is null)
+            {
+                throw new ArgumentException($"Card Configuration '{name}' cannot be null");
+            }
+
             Configurations.Add(name, configuration.GetType());
         }
 
