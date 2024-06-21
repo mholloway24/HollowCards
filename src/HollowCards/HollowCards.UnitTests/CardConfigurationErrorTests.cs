@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace HollowCards.UnitTests
@@ -17,6 +15,19 @@ namespace HollowCards.UnitTests
                 var deck = new Deck<string>(configuration);
             }
             catch(Exception ex)
+            {
+                Assert.True(ex is ArgumentException);
+            }
+        }
+
+        [Fact]
+        public void TestNullSuperDeckConfiguration()
+        {
+            try
+            {
+                SuperDeck deck = new SuperDeck(configuration, 2);
+            }
+            catch (Exception ex)
             {
                 Assert.True(ex is ArgumentException);
             }

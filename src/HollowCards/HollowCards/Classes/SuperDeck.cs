@@ -34,6 +34,11 @@ namespace HollowCards
         {
             Config = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _decks = new List<Deck<T>>();
+            if(configuration is null)
+            {
+                throw new ArgumentException("SuperDeck configuration cannot be null");
+            }
+            
             Parallel.ForEach(Enumerable.Range(0, numberOfDecks), new ParallelOptions { MaxDegreeOfParallelism = 4 }, index =>
             { 
                 Deck<T> d = new Deck<T>(Config);
@@ -74,7 +79,8 @@ namespace HollowCards
 
         public void Shuffle()
         {
-            Parallel.ForEach(_decks, _deck =>
+            Parallel.ForEach(_decks, new ParallelOptions { MaxDegreeOfParallelism = 4 }, 
+            _deck =>
             {
                 _deck.Shuffle();
             });
