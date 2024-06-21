@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 namespace HollowCards.Configurations
 {
-    public class TraditionalNoJokersConfiguration : ICardsConfiguration
+    public class TraditionalAceHighConfiguration : ICardsConfiguration
     {
         public int NumberOfCardsInDeck { get => 52; }
-        public string ConfigurationType { get => CardConfiguration.TraditionalNoJokers; }
+        public string ConfigurationType { get => CardConfiguration.TraditionalAceHigh; }
         
         public IDictionary<string, string> FaceValueMapping { get; private set; }
 
         private readonly string DisplayFormat = "{0} of {1}";
+
 
         /// <summary>
         /// Configures the <see cref="Deck"/> object's cards according to this <see cref="ICardsConfiguration"/>
@@ -37,7 +38,7 @@ namespace HollowCards.Configurations
                         switch (val)
                         {
                             case Constants.Ace:
-                                FaceValueMapping.Add(val, "1");
+                                FaceValueMapping.Add(val, "11");
                                 break;
 
                             case Constants.King:
