@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HollowCards.Configurations;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HollowCards.Configurations
+namespace HollowCards.Utility
 {
     /// <summary>
     /// Centralizes the <see cref="ICardsConfiguration"/> registration
@@ -14,13 +12,15 @@ namespace HollowCards.Configurations
         /// <summary>
         /// List of registered card configurations
         /// </summary>
-        public static IDictionary<string, ICardsConfiguration> Configurations { get; internal set; }
+        public static IDictionary<string, Type> Configurations { get; internal set; }
         
         static CardConfigurationFactory()
         {
-            Configurations = new Dictionary<string, ICardsConfiguration>
+            Configurations = new Dictionary<string, Type>
             {
-                { CardConfiguration.TraditionalNoJokers, new TraditionalNoJokersConfiguration() }
+                { CardConfiguration.TraditionalNoJokers, typeof(TraditionalNoJokersConfiguration) },
+                { CardConfiguration.TraditionalAceHigh, typeof(TraditionalAceHighConfiguration) },
+                { CardConfiguration.TraditionalJokers, typeof(TraditionalJokersConfiguration) }
             };
         }
 
@@ -31,12 +31,17 @@ namespace HollowCards.Configurations
         /// <param name="configuration"></param>
         public static void RegisterConfiguration(string name, ICardsConfiguration configuration)
         {
-            if (Configurations.ContainsKey(name))
+            if (HasConfiguration(name))
             {
                 throw new ArgumentException($"Card Configuration '{name}' already exists");
             }
 
-            Configurations.Add(name, configuration);
+            if(configuration is null)
+            {
+                throw new ArgumentException($"Card Configuration '{name}' cannot be null");
+            }
+
+            Configurations.Add(name, configuration.GetType());
         }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace HollowCards.Configurations
             {
                 throw new ArgumentException($"Card Configuration '{name}' cannot be found");
             }
-            return Configurations[name];
+            return (ICardsConfiguration)Activator.CreateInstance(Configurations[name]);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HollowCards.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -11,14 +12,16 @@ namespace HollowCards
     public class Deck
     {
         private IList<Card> _cards { get; set; }
-        private int _currentIndex { get; set; } = 0;
         private RNGCryptoServiceProvider _randomProvider { get; }
+
+        public int CurrentIndex { get; private set; } = 0;
+        public int CardsInDeck { get; }
 
         /// <summary>
         /// Initialize a deck of cards using this <see cref="ICardsConfiguration"/>
         /// </summary>
         /// <param name="configuration"></param>
-        public Deck(ICardsConfiguration configuration)
+        private Deck(ICardsConfiguration configuration)
         {
             if(configuration == null)
             {
@@ -27,12 +30,27 @@ namespace HollowCards
 
             _randomProvider = new RNGCryptoServiceProvider();
             _cards = configuration.ConfigureDeck();
+            CardsInDeck = _cards.Count;
+        }
+
+        public Deck(ICardsConfiguration configuration, bool startNewGame = true) : this(configuration)
+        {
+            if(startNewGame)
+            {
+                NewGame();
+            }
+        }
+
+        public Deck(string configurationName, bool startNewGame = true) : 
+            this(CardConfigurationFactory.GetConfiguration(configurationName), startNewGame)
+        {
+
         }
 
         /// <summary>
         /// Are there cards left in the deck?
         /// </summary>
-        public bool HasCards => _currentIndex < _cards.Count();
+        public bool HasCards => CurrentIndex < _cards.Count();
 
         /// <summary>
         /// Retrieve the top card on the deck
@@ -40,12 +58,12 @@ namespace HollowCards
         /// <returns></returns>
         public Card Deal()
         {
-            if (_currentIndex >= _cards.Count())
+            if (CurrentIndex >= _cards.Count())
             {
-                Shuffle();                
+                Shuffle();
             }
 
-            return _cards[_currentIndex++];
+            return _cards[CurrentIndex++];
         }
 
         /// <summary>
@@ -53,7 +71,7 @@ namespace HollowCards
         /// </summary>
         public void Shuffle()
         {
-            _currentIndex = 0;
+            CurrentIndex = 0;
 
             for(int i = 0; i < _cards.Count; i++)
             {

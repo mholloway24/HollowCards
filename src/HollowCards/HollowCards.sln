@@ -1,11 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.106
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28711.60
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HollowCards", "HollowCards\HollowCards.csproj", "{A35713D0-C485-459F-9F39-19DDA323C4A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HollowCards", "HollowCards\HollowCards.csproj", "{A35713D0-C485-459F-9F39-19DDA323C4A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HollowCards.Console", "HollowCards.Console\HollowCards.Console.csproj", "{07617D02-6FFA-4A25-BA9D-AFCA7AAF54EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HollowCards.Console", "HollowCards.Console\HollowCards.Console.csproj", "{07617D02-6FFA-4A25-BA9D-AFCA7AAF54EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HollowCards.UnitTests", "HollowCards.UnitTests\HollowCards.UnitTests.csproj", "{DAA7956A-8AB8-45A3-BB8E-297D4A9133A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{07617D02-6FFA-4A25-BA9D-AFCA7AAF54EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07617D02-6FFA-4A25-BA9D-AFCA7AAF54EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07617D02-6FFA-4A25-BA9D-AFCA7AAF54EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA7956A-8AB8-45A3-BB8E-297D4A9133A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA7956A-8AB8-45A3-BB8E-297D4A9133A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA7956A-8AB8-45A3-BB8E-297D4A9133A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA7956A-8AB8-45A3-BB8E-297D4A9133A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
