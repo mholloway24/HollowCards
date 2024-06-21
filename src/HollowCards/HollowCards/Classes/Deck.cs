@@ -60,7 +60,7 @@ namespace HollowCards
         {
             if (CurrentIndex >= _cards.Count())
             {
-                Shuffle();                
+                Shuffle();
             }
 
             return _cards[CurrentIndex++];
