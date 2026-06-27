@@ -33,5 +33,35 @@ namespace HollowCards.UnitTests
                 Assert.True(ex is ArgumentException);
             }
         }
+
+        [Fact]
+        public void ErrorOnDuplicateConfigurationRegistration()
+        {
+            ICardsConfiguration config = CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalNoJokers);
+
+            Assert.Throws<ArgumentException>(() =>
+                CardConfigurationFactory.RegisterConfiguration(CardConfiguration.TraditionalNoJokers, config));
+        }
+
+        [Fact]
+        public void ErrorOnUnknownConfigurationLookup()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                CardConfigurationFactory.GetConfiguration("NonExistentConfiguration_XYZ"));
+        }
+
+        [Fact]
+        public void HasConfiguration_ReturnsTrueForRegisteredName()
+        {
+            Assert.True(CardConfigurationFactory.HasConfiguration(CardConfiguration.TraditionalNoJokers));
+            Assert.True(CardConfigurationFactory.HasConfiguration(CardConfiguration.TraditionalAceHigh));
+            Assert.True(CardConfigurationFactory.HasConfiguration(CardConfiguration.TraditionalJokers));
+        }
+
+        [Fact]
+        public void HasConfiguration_ReturnsFalseForUnregisteredName()
+        {
+            Assert.False(CardConfigurationFactory.HasConfiguration("NonExistentConfiguration_XYZ"));
+        }
     }
 }
