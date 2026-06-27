@@ -1,0 +1,20 @@
+image: Visual Studio 2022
+
+environment:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+
+install:
+  - ps: |
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -OutFile "$env:TEMP\dotnet-install.ps1" -UseBasicParsing
+      & "$env:TEMP\dotnet-install.ps1" -Channel 10.0 -InstallDir 'C:\dotnet10'
+      Write-Host "Installed .NET SDK:"
+      & 'C:\dotnet10\dotnet' --version
+
+build_script:
+  - cmd: C:\dotnet10\dotnet build src/HollowCards/HollowCards.sln --configuration Release
+
+test_script:
+  - cmd: C:\dotnet10\dotnet test src/HollowCards/HollowCards.UnitTests --configuration Release --no-build

@@ -12,7 +12,6 @@ namespace HollowCards
     public class Deck
     {
         private IList<Card> _cards { get; set; }
-        private RNGCryptoServiceProvider _randomProvider { get; }
 
         public int CurrentIndex { get; private set; } = 0;
         public int CardsInDeck { get; }
@@ -28,7 +27,6 @@ namespace HollowCards
                 throw new ArgumentNullException(nameof(configuration), "The configuration must be supplied to the deck");
             }
 
-            _randomProvider = new RNGCryptoServiceProvider();
             _cards = configuration.ConfigureDeck();
             CardsInDeck = _cards.Count;
         }
@@ -100,17 +98,12 @@ namespace HollowCards
             if (numberCards <= 0)
                 throw new ArgumentOutOfRangeException(nameof(numberCards));
 
-            // Create a byte array to hold the random value.
             byte[] randomNumber = new byte[1];
             do
             {
-                // Fill the array with a random value.
-                _randomProvider.GetBytes(randomNumber);
+                RandomNumberGenerator.Fill(randomNumber);
             }
             while (!IsFairChoice(randomNumber[0], numberCards));
-            // Return the random number mod the number
-            // of cards.  The possible values are zero-
-            // based, so we add one.
             return (byte)((randomNumber[0] % numberCards) + 1);
         }
 
