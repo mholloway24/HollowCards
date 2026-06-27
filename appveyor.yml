@@ -6,17 +6,15 @@ environment:
   DOTNET_NOLOGO: true
 
 install:
-  - pwsh: |
-      $installDir = "$env:USERPROFILE\.dotnet"
-      $installScript = "$env:TEMP\dotnet-install.ps1"
-      Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile $installScript -UseBasicParsing
-      & $installScript -Channel 10.0 -InstallDir $installDir
-      $env:PATH = "$installDir;$env:PATH"
-      [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH, [System.EnvironmentVariableTarget]::Process)
-  - dotnet --version
+  - ps: |
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -OutFile "$env:TEMP\dotnet-install.ps1" -UseBasicParsing
+      & "$env:TEMP\dotnet-install.ps1" -Channel 10.0 -InstallDir 'C:\dotnet10'
+      Write-Host "Installed .NET SDK:"
+      & 'C:\dotnet10\dotnet' --version
 
 build_script:
-  - dotnet build src/HollowCards/HollowCards.sln --configuration Release
+  - cmd: C:\dotnet10\dotnet build src/HollowCards/HollowCards.sln --configuration Release
 
 test_script:
-  - dotnet test src/HollowCards/HollowCards.UnitTests --configuration Release --no-build
+  - cmd: C:\dotnet10\dotnet test src/HollowCards/HollowCards.UnitTests --configuration Release --no-build
