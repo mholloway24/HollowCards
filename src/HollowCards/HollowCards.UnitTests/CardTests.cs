@@ -105,12 +105,12 @@ namespace HollowCards.UnitTests
         // --- GetDisplayValue: normal cards use "{Face} of {Suit}" format ---
 
         [Theory]
-        [InlineData(CardConfiguration.TraditionalNoJokers, Constants.Ace, Constants.Clubs, "A of Clubs")]
-        [InlineData(CardConfiguration.TraditionalNoJokers, Constants.King, Constants.Hearts, "K of Hearts")]
-        [InlineData(CardConfiguration.TraditionalAceHigh, Constants.Ace, Constants.Spades, "A of Spades")]
-        [InlineData(CardConfiguration.TraditionalAceHigh, Constants.Two, Constants.Diamonds, "2 of Diamonds")]
-        [InlineData(CardConfiguration.TraditionalJokers, Constants.Queen, Constants.Clubs, "Q of Clubs")]
-        [InlineData(CardConfiguration.TraditionalJokers, Constants.Ten, Constants.Hearts, "10 of Hearts")]
+        [InlineData(CardConfiguration.TraditionalNoJokers, Constants.Ace, "Clubs", "A of Clubs")]
+        [InlineData(CardConfiguration.TraditionalNoJokers, Constants.King, "Hearts", "K of Hearts")]
+        [InlineData(CardConfiguration.TraditionalAceHigh, Constants.Ace, "Spades", "A of Spades")]
+        [InlineData(CardConfiguration.TraditionalAceHigh, Constants.Two, "Diamonds", "2 of Diamonds")]
+        [InlineData(CardConfiguration.TraditionalJokers, Constants.Queen, "Clubs", "Q of Clubs")]
+        [InlineData(CardConfiguration.TraditionalJokers, Constants.Ten, "Hearts", "10 of Hearts")]
         public void DisplayValue_NormalCard_ShowsFaceOfSuit(string configName, string face, string suit, string expected)
         {
             var config = CardConfigurationFactory.GetConfiguration(configName);
