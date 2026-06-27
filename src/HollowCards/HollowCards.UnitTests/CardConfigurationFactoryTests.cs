@@ -37,12 +37,10 @@ namespace HollowCards.UnitTests
         [Fact]
         public void ErrorOnDuplicateConfigurationRegistration()
         {
-            string uniqueName = $"TestDuplicate_{Guid.NewGuid()}";
             ICardsConfiguration config = CardConfigurationFactory.GetConfiguration(CardConfiguration.TraditionalNoJokers);
-            CardConfigurationFactory.RegisterConfiguration(uniqueName, config);
 
             Assert.Throws<ArgumentException>(() =>
-                CardConfigurationFactory.RegisterConfiguration(uniqueName, config));
+                CardConfigurationFactory.RegisterConfiguration(CardConfiguration.TraditionalNoJokers, config));
         }
 
         [Fact]

@@ -35,13 +35,13 @@ namespace HollowCards
                 throw new ArgumentException("SuperDeck configuration cannot be null");
             }
 
-            _decks = new List<Deck>();
-            Parallel.ForEach(Enumerable.Range(0, numberOfDecks), new ParallelOptions { MaxDegreeOfParallelism = 4 }, index =>
-            { 
+            Deck[] deckArray = new Deck[numberOfDecks];
+            Parallel.For(0, numberOfDecks, new ParallelOptions { MaxDegreeOfParallelism = 4 }, index =>
+            {
                 ICardsConfiguration config = (ICardsConfiguration)Activator.CreateInstance(configuration.GetType());
-                Deck d = new Deck(config);
-                _decks.Add(d);
+                deckArray[index] = new Deck(config);
             });
+            _decks = new List<Deck>(deckArray);
             DeckCount = numberOfDecks;
             CardCount = DeckCount * configuration.NumberOfCardsInDeck;
         }
